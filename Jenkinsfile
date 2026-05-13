@@ -1,9 +1,8 @@
-pipeline {
+=pipeline {
     agent any
 
     tools {
         maven 'Maven'
-        jdk 'JDK17'
     }
 
     stages {
@@ -17,13 +16,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'mvn clean package'
+                sh 'mvn clean package'
             }
         }
 
         stage('Test') {
             steps {
-                bat 'mvn test'
+                sh 'mvn test'
             }
         }
     }
