@@ -30,16 +30,24 @@ pipeline {
                 sh 'mvn test'
             }
         }
+
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    bat """
-                    mvn sonar:sonar ^
-                    -Dsonar.projectKey=springboot-cicd ^
+
+                    sh '''
+                    mvn sonar:sonar \
+                    -Dsonar.projectKey=springboot-cicd \
                     -Dsonar.projectName=springboot-cicd
-                    """
+                    '''
                 }
             }
         }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t springboot-cicd .'
+            }
+        }
     }
-}    
+}
