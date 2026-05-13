@@ -3,6 +3,11 @@ pipeline {
 
     tools {
         maven 'Maven'
+        jdk 'JDK17'
+    }
+
+    environment {
+        SCANNER_HOME = tool 'SonarScanner'
     }
 
     stages {
@@ -25,5 +30,16 @@ pipeline {
                 sh 'mvn test'
             }
         }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    bat """
+                    mvn sonar:sonar ^
+                    -Dsonar.projectKey=springboot-cicd ^
+                    -Dsonar.projectName=springboot-cicd
+                    """
+                }
+            }
+        }
     }
-}
+}    
