@@ -68,21 +68,22 @@ stage('Git Commit Changes') {
                                           passwordVariable: 'GIT_PASS')]) {
 
             sh '''
-                git config user.email "shwethap2443@gmail.com"
-                git config user.name "jenkins"
+                git config --global user.email "shwethap2443@gmail.com"
+                git config --global user.name "jenkins"
+
+                git status
 
                 git add .
 
-                git commit -m "clean pipeline update" || true
-                
+                git commit -m "clean pipeline update" || echo "No changes to commit"
+
+                git remote set-url origin https://${GIT_USER}:${GIT_PASS}@github.com/Shwetha24-SDE/DevOps-CI-CD-Project.git
+
                 git push origin master
-
-                '''
-                                          }
+            '''
+        }
     }
-
-
-   } 
+}
   }
 }
 
