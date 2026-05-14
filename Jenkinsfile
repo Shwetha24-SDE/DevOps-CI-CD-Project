@@ -61,7 +61,7 @@ pipeline {
         """
     }
 }
-            stage('Git Commit Changes') {
+stage('Git Commit Changes') {
     steps {
         withCredentials([usernamePassword(credentialsId: 'jenkins-ci-token',
                                           usernameVariable: 'GIT_USER',
@@ -74,6 +74,8 @@ pipeline {
                 git add .
 
                 git commit -m "clean pipeline update" || true
+
+                git remote set-url origin https://${GIT_USER}:${GIT_PASS}@github.com/Shwetha24-SDE/DevOps-CI-CD-Project.git
 
                 git push origin master
             '''
