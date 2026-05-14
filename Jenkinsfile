@@ -75,7 +75,7 @@ stage('Git Commit Changes') {
 
                 git commit -m "clean pipeline update" || true
 
-                git remote set-url origin https://${GIT_USER}:${GIT_PASS}@github.com/Shwetha24-SDE/DevOps-CI-CD-Project.git
+                git remote set-url origin https://${GIT_USER}:${GIT_PASS}@github.com/Shwetha24-SDE/DevOps-CI-CD-Project.git master
 
                 git push origin master
             '''
