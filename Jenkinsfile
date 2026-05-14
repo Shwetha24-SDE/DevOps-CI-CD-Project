@@ -61,21 +61,25 @@ pipeline {
         """
     }
 }
+            stage('Git Commit Changes') {
+    steps {
+        withCredentials([usernamePassword(credentialsId: 'jenkins-ci-token',
+                                          usernameVariable: 'GIT_USER',
+                                          passwordVariable: 'GIT_PASS')]) {
 
-        stage('Git Commit Changes') {
-            steps {
-                sh '''
-                    git config user.email "jenkins@example.com"
-                    git config user.name "jenkins"
+            sh '''
+                git config user.email "shwethap2443@gmail.com"
+                git config user.name "jenkins"
 
-                    git add .
-                    git commit -m "Updated image tag %BUILD_NUMBER%"
-                    git push origin master
-                '''
-            }
+                git add .
+
+                git commit -m "clean pipeline update" || true
+
+                git push origin master
+            '''
         }
-
-
+    }
+}
 
         }
     }
