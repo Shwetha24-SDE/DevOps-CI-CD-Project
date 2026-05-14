@@ -61,37 +61,30 @@ pipeline {
         """
     }
 }
+stage('Git Commit Changes') {
+    steps {
+        withCredentials([usernamePassword(credentialsId: 'jenkins-ci-token',
+                                          usernameVariable: 'GIT_USER',
+                                          passwordVariable: 'GIT_PASS')]) {
 
-    stages {
-        stage('Push to GitHub') {
-            steps {
-                // Use Jenkins Credentials Provider to keep your Token/Password safe
-                // Create a 'Username with password' credential in Jenkins first
-                withCredentials([usernamePassword(credentialsId: 'jenkins-ci-token', passwordVariable: 'GIT_TOKEN', usernameVariable: 'GIT_USER')]) {
-                    sh """
-                        # 1. Configure user identity
-                        git config user.email "shwethap2443@gmail.com"
-                        git config user.name "jenkins"
-                        
-                        # 2. Stage and Commit
-                        git add .
-                        git commit -m "clean pipeline update" || echo "No changes to commit"
-                        
-                        # 3. Correctly set the remote URL (This was the error in your image)
-                        git remote set-url origin https://${GIT_USER}:${GIT_TOKEN}@github.com/Shwetha24-SDE/DevOps-CI-CD-Project.git
-                        
-                        # 4. Push to the branch (Separate command)
-                        git push origin master
-                    """
-                }
-            }
-        }
+            sh '''
+                git config user.email "shwethap2443@gmail.com"
+                git config user.name "jenkins"
+
+                git add .
+
+                git commit -m "clean pipeline update" || true
+                
+                git push origin master
+
+                '''
+                                          }
     }
-}
 
 
    } 
-  
+  }
+}
 
 
 
