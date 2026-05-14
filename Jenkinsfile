@@ -70,7 +70,7 @@ pipeline {
 
                     git add .
                     git commit -m "Updated image tag %BUILD_NUMBER%"
-                    git push origin main
+                    git push origin master
                 '''
             }
         }
