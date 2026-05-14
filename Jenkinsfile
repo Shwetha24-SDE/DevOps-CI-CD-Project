@@ -45,25 +45,25 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                bat 'docker build -t springboot-cicd .'
+                sh 'docker build -t springboot-cicd .'
     }
 }
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t java-app:latest .'
+                sh 'docker build -t java-app:latest .'
     }
 }
 
         stage('Update Helm Values') {
             steps {
-     bat """
-        powershell -Command "(Get-Content java-app\\values.yaml) -replace 'tag:.*','tag: %BUILD_NUMBER%' | Set-Content java-app\\values.yaml"
-        """            }
+            sh """
+                 powershell -Command "(Get-Content java-app\\values.yaml) -replace 'tag:.*','tag: %BUILD_NUMBER%' | Set-Content java-app\\values.yaml"
+                """            }
         }
 
         stage('Git Commit Changes') {
             steps {
-                bat '''
+                sh '''
                     git config user.email "jenkins@example.com"
                     git config user.name "jenkins"
 
