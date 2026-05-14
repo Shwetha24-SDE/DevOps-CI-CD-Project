@@ -56,8 +56,9 @@ pipeline {
 
         stage('Update Helm Values') {
             steps {
-                bat 'powershell -Command "(Get-Content java-app\\values.yaml) -replace ''tag:.*'', ''tag: %BUILD_NUMBER%'' | Set-Content java-app\\values.yaml"'
-            }
+     bat """
+        powershell -Command "(Get-Content java-app\\values.yaml) -replace 'tag:.*','tag: %BUILD_NUMBER%' | Set-Content java-app\\values.yaml"
+        """            }
         }
 
         stage('Git Commit Changes') {
